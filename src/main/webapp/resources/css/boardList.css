@@ -1,0 +1,107 @@
+.main {
+    margin: 50px 0;
+}
+.search_area {
+    width: 100%;
+    height: 150px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#sel_filter,
+#search_box,
+#btn_write{ height: 35px; }
+
+#sel_filter {
+    padding: 0 10px;
+    color: #868686;
+    border: 1px solid #ddd;
+    outline: none;
+
+}
+
+#search_box {
+    display: flex;
+
+}
+#txt_search {
+    width: 300px;
+    height: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    outline: none;
+}
+#btn_search {
+    width: 70px;
+    height: 100%;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+}
+
+#btn_write {
+    width: 80px;
+    font-size: 13px;
+    background: #a8a8a8;
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+
+table {
+    width: 100%;
+    border-top: 2px solid #d1cd9e;
+    border-bottom: 2px solid #d1cd9e;
+}
+table thead {
+    border-bottom: 2px solid #d1cd9e;
+}
+table thead,
+table tbody,
+table th,
+table td { display: block }
+
+table tr { display: flex; align-items: center; height: 50px; }
+table th, table td { text-align: center; padding: 0 10px; font-size: 15px;}
+
+table tr.boardBody { background: #e8e8e8; }
+table tr.boardBody:nth-child(odd) {
+    background: #f9f9f9;
+}
+table tr.boardBody:hover {
+    background: #fff !important;
+}
+
+thead .title { text-align: center;}
+
+.no { width: 50px; }
+.title { width: calc(100% - 350px);  text-align: left;}
+.writer { width: 100px; }
+.regdate { width: 100px; }
+.viewcnt { width: 100px; }
+
+.pagination {
+    margin: 30px 0;
+    font-size: 15px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+.beginPage, .endPage {
+    font-size: 14px;
+}
+.pageActive {
+    color: red;
+}

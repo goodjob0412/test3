@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <!-- 별칭 정하는곳: 앞으로 BoardDto 라고 하면 com.bitstudy.app.domain.Ex02_BoardDto 로 알아들음 -->
+
+        <typeAlias alias="BoardDto" type="com.bitstudy.app.domain.Ex02_BoardDto" />
+        <typeAlias alias="UserDto" type="com.bitstudy.app.domain.UserDto" />
+        <typeAlias alias="SearchCondition" type="com.bitstudy.app.domain.Ex12_SearchCondition" />
+        <typeAlias alias="CommentDto" type="com.bitstudy.app.domain.Ex14_CommentDto" />
+    </typeAliases>
+</configuration>

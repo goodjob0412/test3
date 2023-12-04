@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    - 전체 글 수
+    - 글쓰기(그냥 폼 보여주기만 할거, 실제 데이터 넣고 '글쓰기'버튼 누를때)
+    - 조회 -> 게시글(조회수 올리기)
+    - 조회 -> 전부
+    - 수정
+    - 삭제 (사용자, 관리자)
+    - 검색
+=========================
+    - 댓글
+    - 대댓글
+-->
+
+<mapper namespace="com.bitstudy.app.dao.boardMapper">
+<!-- 글 하나 가져오기-->
+    <select id="select" parameterType="int" resultType="BoardDto">
+        select * from board where bno = #{bno}
+    </select>
+<!-- 불러오면서 조회수 1씩 증가-->
+    <update id="increaseViewCnt" parameterType="int">
+        update board set view_cnt = view_cnt + 1 where bno = #{bno}
+    </update>
+
+
+
+<!-- 전체 글 수 뽑기  -->
+    <select id="count" resultType="int" >
+        select count(*) from board
+    </select>
+
+<!-- 전체 삭제 -->
+    <delete id="deleteAll">
+        delete from board
+    </delete>
+<!-- 글 (하나) 삭제 (글번호, 글쓴이 정보 필요)-->
+    <delete id="delete" parameterType="map">
+        delete from board where bno = #{ bno } and writer = #{ writer }
+    </delete>
+<!-- 관리자용   -->
+    <delete id="deleteForAdmin" parameterType="int">
+        delete from board where bno = #{ bno }
+    </delete>
+
+<!-- =========================================== -->
+
+    <insert id="insert" parameterType="BoardDto">
+        insert into board (title, content, writer) values (#{title}, #{content}, #{writer})
+    </insert>
+
+    <!-- =========================================== -->
+<!--    전체 불러오기-->
+    <select id="selectAll" resultType="BoardDto">
+        select * from board order by reg_date desc, bno desc
+    </select>
+
+<!--   특정 범위 내로 불러오기 -->
+    <select id="selectPage" parameterType="map" resultType="BoardDto">
+        select * from board order by reg_date desc, bno desc
+        limit #{offset}, #{pageSize}
+    </select>
+
+
+<!--   글 수정 -->
+    <update id="update" parameterType="map">
+        update board
+        set title=#{title}
+        , content=#{content}
+        , up_date=now()
+        where bno = #{bno} and writer = #{writer}
+    </update>
+
+    <update id="update2" parameterType="BoardDto">
+        update board
+        set title=#{title}
+        , content=#{content}
+        , up_date=now()
+        where bno = #{bno} and writer = #{writer}
+    </update>
+
+
+<!--    /////////////////////////////////////////-->
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
+
+        select * from board
+            where true
+        <choose>
+            <when test='option == "T"'>
+                and title like concat('%',#{keyword},'%')
+            </when>
+            <when test='option == "W"'>
+                and writer like concat('%',#{keyword},'%')
+            </when>
+            <when test='option == "TC"'>
+                and (title like concat('%',#{keyword},'%')
+                or content like concat('%',#{keyword},'%'))
+            </when>
+        </choose>
+        order by reg_date desc, bno desc
+        limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchSelectCount" parameterType="SearchCondition" resultType="int">
+        select count(*) from board
+        where true
+
+        <choose>
+            <when test='option == "T"'>
+                and title like concat('%',#{keyword},'%')
+            </when>
+            <when test='option == "W"'>
+                and writer like concat('%',#{keyword},'%')
+            </when>
+            <when test='option == "TC"'>
+                and (title like concat('%',#{keyword},'%')
+                or content like concat('%',#{keyword},'%'))
+            </when>
+        </choose>
+
+    </select>
+
+
+<!--    댓글 개수 증가 +1, -1-->
+    <update id="updateCommentCount" parameterType="map">
+        update board
+        set comment_cnt=comment_cnt + #{count}
+        where bno=#{bno}
+    </update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

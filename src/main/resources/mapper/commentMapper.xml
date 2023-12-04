@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitstudy.app.dao.commentMapper">
+<!--    특정 게시물의 모든 댓글 삭제 -->
+        <delete id="deleteAll" parameterType="int">
+            delete from comment
+            where bno=#{bno}
+        </delete>
+
+<!--    특정 게시물의 총 댓글 개수 -->
+        <select id="count" parameterType="int" resultType="int">
+            select count(*) from comment
+            where bno=#{bno}
+        </select>
+
+<!--    댓글 작성자만 댓글 삭제-->
+        <delete id="delete" parameterType="map">
+            delete from comment
+            where cno=#{cno} and commenter=#{commenter}
+        </delete>
+
+<!--    댓글 등록-->
+        <insert id="insert" parameterType="CommentDto">
+            insert into comment (bno, comment, commenter )
+            values (#{bno}, #{comment}, #{commenter})
+        </insert>
+
+<!--    최근 날짜순으로 댓글 조회-->
+        <select id="selectAll" parameterType="int" resultType="CommentDto">
+            select * from comment
+            where bno=#{bno}
+            order by reg_date desc, cno desc
+        </select>
+
+<!--    DB에 있는 모든 댓글들 중에서 하나만 가져오기-->
+        <select id="select" parameterType="int" resultType="CommentDto">
+            select * from comment
+            where cno=#{cno}
+        </select>
+
+<!--    댓글 작성자만 댓글 수정-->
+        <update id="update" parameterType="CommentDto">
+            update comment
+            set comment=#{comment}
+                , up_date = now()
+            where cno=#{cno} and commenter=#{commenter}
+        </update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
